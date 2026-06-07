@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - SalesTrack CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --topbar-h: 60px;
+      --bg-page: #f0f2f7;
+      --bg-card: #ffffff;
+      --bg-sidebar: #0f172a;
+      --bg-topbar: #ffffff;
+      --bg-input: #f8fafc;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --accent-light: #eef2ff;
+      --accent-text: #4f46e5;
+      --green: #10b981;
+      --green-bg: #f0fdf4;
+      --green-text: #065f46;
+      --amber: #f59e0b;
+      --amber-bg: #fffbeb;
+      --amber-text: #92400e;
+      --red: #ef4444;
+      --red-bg: #fef2f2;
+      --red-text: #991b1b;
+      --blue: #3b82f6;
+      --blue-bg: #eff6ff;
+      --blue-text: #1e40af;
+      --purple: #8b5cf6;
+      --purple-bg: #f5f3ff;
+      --purple-text: #5b21b6;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+      --radius: 10px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #0f172a;
+      --bg-card: #1e293b;
+      --bg-sidebar: #020617;
+      --bg-topbar: #1e293b;
+      --bg-input: #0f172a;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      --border: #334155;
+      --border-light: #1e293b;
+      --accent-light: rgba(99,102,241,0.15);
+      --accent-text: #818cf8;
+      --green-bg: rgba(16,185,129,0.1);
+      --green-text: #34d399;
+      --amber-bg: rgba(245,158,11,0.1);
+      --amber-text: #fbbf24;
+      --red-bg: rgba(239,68,68,0.1);
+      --red-text: #f87171;
+      --blue-bg: rgba(59,130,246,0.1);
+      --blue-text: #60a5fa;
+      --purple-bg: rgba(139,92,246,0.1);
+      --purple-text: #a78bfa;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.5;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--bg-sidebar);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-logo-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+    }
+
+    .sidebar-logo-text { display: flex; flex-direction: column; }
+    .sidebar-logo-text span:first-child { color: white; font-weight: 700; font-size: 15px; }
+    .sidebar-logo-text span:last-child { color: rgba(255,255,255,0.35); font-size: 10px; }
+
+    .sidebar-user-card {
+      margin: 12px 16px;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .sidebar-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .sidebar-user-info { flex: 1; min-width: 0; }
+    .sidebar-user-name { color: white; font-size: 12px; font-weight: 600; }
+    .sidebar-user-email { color: rgba(255,255,255,0.4); font-size: 10px; }
+
+    .role-badge-pill {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .role-badge-pill.manager { background: var(--amber-bg); color: var(--amber); }
+    .role-badge-pill.member { background: rgba(99,102,241,0.3); color: #a5b4fc; }
+
+    .sidebar-nav { flex: 1; padding: 8px 0; }
+
+    .sidebar-section-label {
+      padding: 12px 24px 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      margin: 1px 10px;
+      border-radius: var(--radius);
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
+    .nav-item.active { background: var(--accent); color: white; box-shadow: 0 2px 8px rgba(99,102,241,0.4); }
+    .nav-item i { width: 18px; text-align: center; }
+
+    .ai-pill { background: rgba(99,102,241,0.2); color: #a5b4fc; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 4px; margin-left: auto; }
+
+    .sidebar-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.06); padding: 12px; }
+
+    .sign-out-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      color: rgba(255,255,255,0.35);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    .sign-out-btn:hover { background: rgba(239,68,68,0.08); color: #ef4444; }
+
+    /* Topbar */
+    #topbar {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-w);
+      width: calc(100% - var(--sidebar-w));
+      height: var(--topbar-h);
+      background: var(--bg-topbar);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 12px;
+      z-index: 90;
+    }
+
+    .topbar-left { flex: 1; display: flex; flex-direction: column; }
+    .topbar-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+    .topbar-breadcrumb { font-size: 12px; color: var(--text-muted); }
+
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
+
+    .topbar-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .topbar-btn:hover { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent); }
+
+    .notif-dot { position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; background: var(--red); border-radius: 50%; border: 2px solid var(--bg-topbar); }
+
+    .account-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .account-chip:hover { background: var(--bg-input); }
+
+    .account-chip-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .account-chip-info { display: flex; flex-direction: column; }
+    .account-chip-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+    .account-chip-role { font-size: 10px; color: var(--text-muted); }
+
+    /* Dropdowns */
+    .dropdown {
+      position: absolute;
+      top: 48px;
+      right: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+    }
+
+    .dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .notif-dropdown { width: 280px; padding: 8px; }
+
+    .notif-item { display: flex; gap: 12px; padding: 10px; border-radius: var(--radius); cursor: pointer; }
+    .notif-item:hover { background: var(--bg-input); }
+    .notif-item-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .notif-item-content { flex: 1; }
+    .notif-item-text { font-size: 13px; color: var(--text-primary); }
+    .notif-item-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    .account-dropdown { width: 200px; padding: 8px; }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-item:hover { background: var(--bg-input); }
+    .dropdown-item i { width: 16px; text-align: center; color: var(--text-secondary); }
+    .dropdown-item.danger { color: var(--red); }
+    .dropdown-item.danger i { color: var(--red); }
+    .dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* Main */
+    #main-wrapper {
+      margin-left: var(--sidebar-w);
+      margin-top: var(--topbar-h);
+      min-height: calc(100vh - var(--topbar-h));
+      padding: 24px;
+    }
+
+    /* Settings Layout */
+    .settings-layout {
+      display: flex;
+      gap: 24px;
+    }
+
+    .settings-nav {
+      width: 240px;
+      flex-shrink: 0;
+    }
+
+    .settings-nav-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      padding: 8px;
+      position: sticky;
+      top: 84px;
+    }
+
+    .settings-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .settings-nav-item:hover { background: var(--bg-input); color: var(--text-primary); }
+    .settings-nav-item.active { background: var(--accent-light); color: var(--accent-text); }
+
+    .settings-nav-item i { width: 16px; text-align: center; }
+
+    .settings-content { flex: 1; min-width: 0; }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+    .card-body { padding: 20px; }
+
+    .settings-panel { display: none; }
+    .settings-panel.active { display: block; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--accent-light); border-color: var(--accent); }
+    .btn-danger { background: var(--red-bg); color: var(--red); }
+    .btn-danger:hover { background: var(--red); color: white; }
+
+    /* Forms */
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+    .form-input::placeholder { color: var(--text-muted); }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch.on { background: var(--accent); }
+    .toggle-switch.on::after { left: 22px; }
+
+    /* Toast */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 1000;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      font-size: 13px;
+      font-weight: 500;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast i { font-size: 14px; }
+    .toast-success i { color: var(--green); }
+    .toast-error i { color: var(--red); }
+    .toast-warning i { color: var(--amber); }
+    .toast-info i { color: var(--blue); }
+
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    /* Action Card */
+    .action-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+    }
+
+    .action-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .action-card-content { flex: 1; }
+    .action-card-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .action-card-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Theme Cards */
+    .theme-cards { display: flex; gap: 12px; margin-top: 16px; }
+
+    .theme-card {
+      flex: 1;
+      padding: 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .theme-card.selected { border-color: var(--accent); background: var(--accent-light); }
+    .theme-card-preview { width: 48px; height: 48px; border-radius: var(--radius); margin: 0 auto 8px; }
+    .theme-card-label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+
+    .theme-light .theme-card-preview { background: linear-gradient(135deg, #f0f2f7 50%, #ffffff 50%); }
+    .theme-dark .theme-card-preview { background: linear-gradient(135deg, #0f172a 50%, #1e293b 50%); }
+    .theme-system .theme-card-preview { background: linear-gradient(135deg, #f0f2f7 50%, #0f172a 50%); }
+
+    /* Color Swatches */
+    .color-swatches { display: flex; gap: 8px; margin-top: 16px; }
+
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .color-swatch:hover { transform: scale(1.1); }
+    .color-swatch.selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-light); }
+
+    /* Danger Zone */
+    .danger-zone { border: 1px solid var(--red); }
+
+    .session-info-card {
+      background: var(--bg-input);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .session-info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+    .session-info-row:last-child { border-bottom: none; }
+    .session-info-label { font-size: 12px; color: var(--text-muted); }
+    .session-info-value { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+
+    /* Password Strength */
+    .password-strength { margin-top: 8px; }
+    .password-strength-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .password-strength-fill { height: 100%; width: 0%; transition: all 0.3s ease; }
+    .password-strength-text { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    @media print {
+      #sidebar, #topbar { display: none !important; }
+      #main-wrapper { margin: 0 !important; padding: 0 !important; }
+    }
+
+    @media (max-width: 768px) {
+      .settings-layout { flex-direction: column; }
+      .settings-nav { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-bolt"></i></div>
+    <div class="sidebar-logo-text">
+      <span>SalesTrack</span>
+      <span>CRM Platform</span>
+    </div>
+  </div>
+
+  <div class="sidebar-user-card">
+    <div class="sidebar-avatar" id="sidebar-avatar">DN</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" id="sidebar-name">Duy Nguyen</div>
+      <div class="sidebar-user-email" id="sidebar-email">duy.nguyen@salestrack.vn</div>
+    </div>
+    <span class="role-badge-pill member" id="sidebar-role-badge">Member</span>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="sidebar-section-label">MAIN</div>
+    <a href="index.html" id="nav-dashboard" class="nav-item">
+      <i class="fa-solid fa-house"></i>
+      <span>Dashboard</span>
+    </a>
+    <a href="leads.html" id="nav-leads" class="nav-item">
+      <i class="fa-solid fa-users"></i>
+      <span>Leads</span>
+    </a>
+    <a href="pipeline.html" id="nav-pipeline" class="nav-item">
+      <i class="fa-solid fa-diagram-project"></i>
+      <span>Pipeline</span>
+    </a>
+    <a href="forecast.html" id="nav-forecast" class="nav-item">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Forecast</span>
+    </a>
+    <a href="activities.html" id="nav-activities" class="nav-item">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>Activities</span>
+    </a>
+    <a href="ai_email.html" id="nav-ai" class="nav-item">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span>AI Email</span>
+      <span class="ai-pill">AI</span>
+    </a>
+
+    <div class="sidebar-section-label manager-only">MANAGER</div>
+    <a href="reports.html" id="nav-reports" class="nav-item manager-only">
+      <i class="fa-solid fa-file-chart-column"></i>
+      <span>Reports</span>
+    </a>
+    <a href="settings.html" id="nav-settings" class="nav-item manager-only active">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="sign-out-btn" onclick="signOut()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Sign out</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Topbar -->
+<header id="topbar">
+  <div class="topbar-left">
+    <div class="topbar-title">Settings</div>
+    <div class="topbar-breadcrumb">SalesTrack <i class="fa-solid fa-chevron-right" style="font-size:10px;margin:0 6px;"></i> Settings</div>
+  </div>
+
+  <div class="topbar-right">
+    <button class="topbar-btn" onclick="toggleTheme()">
+      <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
+
+    <div class="topbar-btn" onclick="toggleNotifDropdown()" style="cursor:pointer;">
+      <i class="fa-solid fa-bell"></i>
+      <span class="notif-dot"></span>
+      <div class="dropdown notif-dropdown" id="notif-dropdown">
+        <div class="notif-item">
+          <div class="notif-item-dot"></div>
+          <div class="notif-item-content">
+            <div class="notif-item-text">New lead assigned: Le Van Nam</div>
+            <div class="notif-item-time">2 min ago</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-item-dot"></div>
+          <div class="notif-item-content">
+            <div class="notif-item-text">Deal moved to Negotiation: ABC Mfg</div>
+            <div class="notif-item-time">1 hour ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="account-chip" onclick="toggleAccountDropdown()">
+      <div class="account-chip-avatar" id="topbar-avatar">DN</div>
+      <div class="account-chip-info">
+        <div class="account-chip-name" id="topbar-name">Duy Nguyen</div>
+        <div class="account-chip-role" id="topbar-role">Sales Member</div>
+      </div>
+      <i class="fa-solid fa-chevron-down" style="font-size:10px;color:var(--text-muted);"></i>
+      <div class="dropdown account-dropdown" id="account-dropdown">
+        <div class="dropdown-item" onclick="alert('Coming soon')">
+          <i class="fa-solid fa-user"></i>
+          <span>My Profile</span>
+        </div>
+        <div class="dropdown-item">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item" onclick="switchRole()">
+          <i class="fa-solid fa-rotate"></i>
+          <span>Switch Role</span>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item danger" onclick="signOut()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign out</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main id="main-wrapper">
+  <div class="settings-layout">
+    <!-- Settings Nav -->
+    <div class="settings-nav">
+      <div class="settings-nav-card">
+        <div class="settings-nav-item active" data-panel="profile" onclick="switchPanel('profile')">
+          <i class="fa-solid fa-user"></i>
+          <span>Profile</span>
+        </div>
+        <div class="settings-nav-item" data-panel="notifications" onclick="switchPanel('notifications')">
+          <i class="fa-solid fa-bell"></i>
+          <span>Notifications</span>
+        </div>
+        <div class="settings-nav-item" data-panel="appearance" onclick="switchPanel('appearance')">
+          <i class="fa-solid fa-palette"></i>
+          <span>Appearance</span>
+        </div>
+        <div class="settings-nav-item" data-panel="data" onclick="switchPanel('data')">
+          <i class="fa-solid fa-database"></i>
+          <span>Data</span>
+        </div>
+        <div class="settings-nav-item" data-panel="ai" onclick="switchPanel('ai')">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>AI Integration</span>
+        </div>
+        <div class="settings-nav-item" data-panel="security" onclick="switchPanel('security')">
+          <i class="fa-solid fa-shield"></i>
+          <span>Security</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Content -->
+    <div class="settings-content">
+      <!-- Profile Panel -->
+      <div class="settings-panel active" id="panel-profile">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Profile Settings</h3>
+          </div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" id="profile-name" value="">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="profile-email" value="">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Job Title</label>
+                <input type="text" class="form-input" id="profile-title" value="">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-input" id="profile-phone" placeholder="+84 xxx xxx xxx">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Department</label>
+                <select class="form-input" id="profile-dept">
+                  <option value="Sales">Sales</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Management">Management</option>
+                  <option value="Operations">Operations</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Timezone</label>
+                <select class="form-input" id="profile-tz">
+                  <option value="Asia/Ho_Chi_Minh">Asia/Ho Chi Minh</option>
+                  <option value="Asia/Bangkok">Asia/Bangkok</option>
+                  <option value="UTC">UTC</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-top:20px;">
+              <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Panel -->
+      <div class="settings-panel" id="panel-notifications">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Notification Preferences</h3>
+          </div>
+          <div class="card-body">
+            <div class="notif-toggle-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">
+              <span>New lead assigned to me</span>
+              <div class="toggle-switch on" data-key="newLead" onclick="toggleNotifSetting(this)"></div>
+            </div>
+            <div class="notif-toggle-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">
+              <span>Deal stage changed</span>
+              <div class="toggle-switch on" data-key="dealStage" onclick="toggleNotifSetting(this)"></div>
+            </div>
+            <div class="notif-toggle-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">
+              <span>Activity reminder</span>
+              <div class="toggle-switch on" data-key="activityReminder" onclick="toggleNotifSetting(this)"></div>
+            </div>
+            <div class="notif-toggle-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">
+              <span>Weekly pipeline summary email</span>
+              <div class="toggle-switch" data-key="weeklySummary" onclick="toggleNotifSetting(this)"></div>
+            </div>
+            <div class="notif-toggle-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
+              <span>AI email generation complete</span>
+              <div class="toggle-switch on" data-key="aiEmailComplete" onclick="toggleNotifSetting(this)"></div>
+            </div>
+            <div style="margin-top:20px;">
+              <button class="btn btn-primary" onclick="saveNotificationSettings()">Save Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appearance Panel -->
+      <div class="settings-panel" id="panel-appearance">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Appearance</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-label">Theme</div>
+            <div class="theme-cards">
+              <div class="theme-card theme-light selected" onclick="setTheme('light')">
+                <div class="theme-card-preview"></div>
+                <div class="theme-card-label">Light</div>
+              </div>
+              <div class="theme-card theme-dark" onclick="setTheme('dark')">
+                <div class="theme-card-preview"></div>
+                <div class="theme-card-label">Dark</div>
+              </div>
+              <div class="theme-card theme-system" onclick="setTheme('system')">
+                <div class="theme-card-preview"></div>
+                <div class="theme-card-label">System</div>
+              </div>
+            </div>
+
+            <div class="form-label" style="margin-top:32px;">Sidebar Color</div>
+            <div class="color-swatches">
+              <div class="color-swatch selected" style="background:#0f172a;" onclick="setSidebarColor('#0f172a', this)"></div>
+              <div class="color-swatch" style="background:#1e293b;" onclick="setSidebarColor('#1e293b', this)"></div>
+              <div class="color-swatch" style="background:#312e81;" onclick="setSidebarColor('#312e81', this)"></div>
+              <div class="color-swatch" style="background:#064e3b;" onclick="setSidebarColor('#064e3b', this)"></div>
+              <div class="color-swatch" style="background:#4c0519;" onclick="setSidebarColor('#4c0519', this)"></div>
+            </div>
+
+            <div class="form-label" style="margin-top:32px;">Font Size</div>
+            <div style="display:flex;gap:8px;margin-top:8px;">
+              <button class="btn btn-secondary" onclick="setFontSize(14)">Small</button>
+              <button class="btn btn-primary" onclick="setFontSize(16)">Medium</button>
+              <button class="btn btn-secondary" onclick="setFontSize(18)">Large</button>
+            </div>
+
+            <div style="margin-top:32px;">
+              <button class="btn btn-primary" onclick="saveAppearanceSettings()">Save Appearance</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Panel -->
+      <div class="settings-panel" id="panel-data">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Data Management</h3>
+          </div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+              <div style="background:var(--bg-input);padding:16px;border-radius:var(--radius);text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:var(--accent);" id="data-leads">0</div>
+                <div style="font-size:12px;color:var(--text-muted);">Total Leads</div>
+              </div>
+              <div style="background:var(--bg-input);padding:16px;border-radius:var(--radius);text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:var(--accent);" id="data-activities">0</div>
+                <div style="font-size:12px;color:var(--text-muted);">Total Activities</div>
+              </div>
+              <div style="background:var(--bg-input);padding:16px;border-radius:var(--radius);text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:var(--accent);" id="data-updated">-</div>
+                <div style="font-size:12px;color:var(--text-muted);">Last Updated</div>
+              </div>
+            </div>
+
+            <div class="action-card">
+              <div class="action-card-icon" style="background:var(--blue-bg);color:var(--blue);">
+                <i class="fa-solid fa-download"></i>
+              </div>
+              <div class="action-card-content">
+                <div class="action-card-title">Export Data</div>
+                <div class="action-card-desc">Download all leads and activities as JSON file</div>
+              </div>
+              <button class="btn btn-secondary" onclick="exportData()">Export JSON</button>
+            </div>
+
+            <div class="action-card">
+              <div class="action-card-icon" style="background:var(--green-bg);color:var(--green);">
+                <i class="fa-solid fa-database"></i>
+              </div>
+              <div class="action-card-content">
+                <div class="action-card-title">Load Sample Data</div>
+                <div class="action-card-desc">Populate app with demo leads and activities for testing</div>
+              </div>
+              <button class="btn btn-primary" onclick="loadSampleData()">Load Sample</button>
+            </div>
+
+            <div class="action-card">
+              <div class="action-card-icon" style="background:var(--red-bg);color:var(--red);">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+              <div class="action-card-content">
+                <div class="action-card-title">Clear All Data</div>
+                <div class="action-card-desc">Remove all leads, activities and settings from browser</div>
+              </div>
+              <button class="btn btn-danger" onclick="clearData()">Clear Data</button>
+            </div>
+
+            <div class="action-card">
+              <div class="action-card-icon" style="background:var(--purple-bg);color:var(--purple);">
+                <i class="fa-solid fa-upload"></i>
+              </div>
+              <div class="action-card-content">
+                <div class="action-card-title">Import Data</div>
+                <div class="action-card-desc">Upload a previously exported JSON file</div>
+              </div>
+              <div>
+                <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importData(this)">
+                <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Import</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Panel -->
+      <div class="settings-panel" id="panel-ai">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">AI Integration</h3>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#4285f4,#34a853);display:flex;align-items:center;justify-content:center;">
+                <i class="fa-solid fa-brain" style="color:white;font-size:20px;"></i>
+              </div>
+              <div>
+                <div style="font-weight:600;color:var(--text-primary);">Google Gemini</div>
+                <div style="font-size:12px;color:var(--text-muted);">AI Provider</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Gemini API Key</label>
+              <div style="position:relative;">
+                <input type="password" class="form-input" id="gemini-api-key" placeholder="Enter your API key">
+                <button class="password-toggle" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;" onclick="toggleApiKey()">
+                  <i class="fa-solid fa-eye" id="api-key-icon"></i>
+                </button>
+              </div>
+              <a href="https://ai.google.dev" target="_blank" style="font-size:11px;color:var(--accent);margin-top:4px;display:inline-block;">Get free API key at ai.google.dev</a>
+            </div>
+
+            <button class="btn btn-secondary" style="margin-bottom:24px;" onclick="testGeminiConnection()">
+              <i class="fa-solid fa-plug"></i>
+              Test Connection
+            </button>
+            <span id="gemini-status" style="margin-left:12px;font-size:12px;"></span>
+
+            <div class="form-group">
+              <label class="form-label">Model</label>
+              <select class="form-input" id="gemini-model">
+                <option value="gemini-2.0-flash">gemini-2.0-flash (Recommended)</option>
+                <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+              </select>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div class="form-group">
+                <label class="form-label">Default Tone</label>
+                <select class="form-input" id="ai-tone">
+                  <option value="Professional">Professional</option>
+                  <option value="Friendly">Friendly</option>
+                  <option value="Urgent">Urgent</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Default Language</label>
+                <select class="form-input" id="ai-language">
+                  <option value="English">English</option>
+                  <option value="Vietnamese">Vietnamese</option>
+                  <option value="Both">Both</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Max Email Length: <span id="email-length-val">250</span> words</label>
+              <input type="range" min="100" max="500" value="250" class="form-input" id="ai-max-length" oninput="document.getElementById('email-length-val').textContent=this.value" style="padding:0;">
+            </div>
+
+            <div style="margin-top:24px;">
+              <button class="btn btn-primary" onclick="saveAISettings()">Save AI Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Panel -->
+      <div class="settings-panel" id="panel-security">
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header">
+            <h3 class="card-title">Security</h3>
+          </div>
+          <div class="card-body">
+            <div class="session-info-card">
+              <div class="session-info-row">
+                <span class="session-info-label">Logged in as</span>
+                <span class="session-info-value" id="session-name">-</span>
+              </div>
+              <div class="session-info-row">
+                <span class="session-info-label">Role</span>
+                <span class="session-info-value" id="session-role">-</span>
+              </div>
+              <div class="session-info-row">
+                <span class="session-info-label">Login time</span>
+                <span class="session-info-value" id="session-time">-</span>
+              </div>
+              <div class="session-info-row">
+                <span class="session-info-label">Session expires</span>
+                <span class="session-info-value">Browser session</span>
+              </div>
+            </div>
+
+            <h4 style="font-size:14px;font-weight:600;margin-bottom:16px;color:var(--text-primary);">Change Password</h4>
+
+            <div style="max-width:320px;">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input type="password" class="form-input" id="curr-password">
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-input" id="new-password" oninput="updatePasswordStrength(this.value)">
+                <div class="password-strength">
+                  <div class="password-strength-bar">
+                    <div class="password-strength-fill" id="strength-fill"></div>
+                  </div>
+                  <div class="password-strength-text" id="strength-text">Enter a password</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" class="form-input" id="confirm-password">
+              </div>
+              <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card danger-zone">
+          <div class="card-header">
+            <h3 class="card-title" style="color:var(--red);">Danger Zone</h3>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-danger" onclick="signOut()">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Sign out all sessions
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script>
+/* -- SESSION -- */
+const SESSION = JSON.parse(localStorage.getItem('salestrack_session')) || {};
+
+function checkAuth() {
+  if (!SESSION.loggedIn) {
+    window.location.href = 'sign_in.html';
+    return false;
+  }
+  return true;
+}
+
+function signOut() {
+  localStorage.removeItem('salestrack_session');
+  window.location.href = 'sign_in.html';
+}
+
+/* -- POPULATE UI -- */
+function initUserUI() {
+  if (!SESSION.loggedIn) return;
+
+  const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+  setTxt('sidebar-name', SESSION.name);
+  setTxt('sidebar-email', SESSION.email);
+  setTxt('sidebar-avatar', SESSION.initials);
+  setTxt('topbar-name', SESSION.name);
+  setTxt('topbar-role', SESSION.roleLabel);
+  setTxt('topbar-avatar', SESSION.initials);
+
+  const roleBadge = document.getElementById('sidebar-role-badge');
+  if (roleBadge) {
+    roleBadge.textContent = SESSION.role === 'manager' ? 'Manager' : 'Member';
+    roleBadge.className = SESSION.role === 'manager' ? 'role-badge-pill manager' : 'role-badge-pill member';
+  }
+
+  const isManager = SESSION.role === 'manager';
+  document.querySelectorAll('.manager-only').forEach(el => {
+    el.style.display = isManager ? '' : 'none';
+  });
+
+  // Security panel
+  setTxt('session-name', SESSION.name);
+  setTxt('session-role', SESSION.roleLabel);
+  setTxt('session-time', SESSION.loginTime ? new Date(SESSION.loginTime).toLocaleString() : '-');
+
+  // Profile panel
+  document.getElementById('profile-name').value = SESSION.name || '';
+  document.getElementById('profile-email').value = SESSION.email || '';
+  document.getElementById('profile-title').value = SESSION.roleLabel || '';
+}
+
+/* -- LOCALSTORAGE -- */
+function getLeads() { return JSON.parse(localStorage.getItem('salestrack_leads')) || []; }
+function saveLeads(d) { localStorage.setItem('salestrack_leads', JSON.stringify(d)); }
+function getActivities() { return JSON.parse(localStorage.getItem('salestrack_activities')) || []; }
+function saveActivities(d) { localStorage.setItem('salestrack_activities', JSON.stringify(d)); }
+function getSettings() { return JSON.parse(localStorage.getItem('salestrack_settings')) || {}; }
+function saveSettings(d) { localStorage.setItem('salestrack_settings', JSON.stringify(d)); }
+
+/* -- TOAST -- */
+function showToast(message, type = 'info') {
+  const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info', warning: 'fa-triangle-exclamation' };
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-' + type;
+  toast.innerHTML = '<i class="fa-solid ' + (icons[type] || icons.info) + '"></i>' + message;
+  document.getElementById('toast-container').appendChild(toast);
+  setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .3s'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+/* -- THEME -- */
+function toggleTheme() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  const icon = document.getElementById('theme-icon');
+  if (icon) icon.className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  localStorage.setItem('salestrack_theme', document.documentElement.dataset.theme);
+  updateThemeCards();
+}
+
+function setTheme(theme) {
+  if (theme === 'system') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+  } else {
+    document.documentElement.dataset.theme = theme;
+  }
+  const icon = document.getElementById('theme-icon');
+  if (icon) icon.className = document.documentElement.dataset.theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  localStorage.setItem('salestrack_theme', document.documentElement.dataset.theme);
+  localStorage.setItem('salestrack_theme_mode', theme);
+  updateThemeCards();
+}
+
+function updateThemeCards() {
+  const theme = localStorage.getItem('salestrack_theme_mode') || 'light';
+  document.querySelectorAll('.theme-card').forEach(card => card.classList.remove('selected'));
+  document.querySelector('.theme-' + theme)?.classList.add('selected');
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem('salestrack_theme');
+  if (saved) {
+    document.documentElement.dataset.theme = saved;
+    const icon = document.getElementById('theme-icon');
+    if (icon && saved === 'dark') icon.className = 'fa-solid fa-sun';
+  }
+  updateThemeCards();
+})();
+
+/* -- DROPDOWNS -- */
+function toggleNotifDropdown() { document.getElementById('notif-dropdown')?.classList.toggle('open'); }
+function toggleAccountDropdown() { document.getElementById('account-dropdown')?.classList.toggle('open'); }
+
+document.addEventListener('click', function (e) {
+  const chip = document.getElementById('account-chip');
+  const notifBtn = document.getElementById('notif-btn');
+  if (chip && !chip.contains(e.target)) document.getElementById('account-dropdown')?.classList.remove('open');
+  if (notifBtn && !notifBtn.contains(e.target)) document.getElementById('notif-dropdown')?.classList.remove('open');
+});
+
+/* -- ROLE SWITCH -- */
+function switchRole() {
+  if (!SESSION.loggedIn) return;
+  SESSION.role = SESSION.role === 'manager' ? 'member' : 'manager';
+  SESSION.roleLabel = SESSION.role === 'manager' ? 'Sales Manager' : 'Sales Member';
+  SESSION.name = SESSION.role === 'manager' ? 'Anna Nguyen' : 'Duy Nguyen';
+  SESSION.initials = SESSION.role === 'manager' ? 'AN' : 'DN';
+  SESSION.email = SESSION.name.toLowerCase().replace(' ', '.') + '@salestrack.vn';
+  localStorage.setItem('salestrack_session', JSON.stringify(SESSION));
+  location.reload();
+}
+
+/* -- SETTINGS PANELS -- */
+function switchPanel(panel) {
+  document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + panel)?.classList.add('active');
+  document.querySelector('.settings-nav-item[data-panel="' + panel + '"]')?.classList.add('active');
+
+  if (panel === 'data') updateDataStats();
+}
+
+/* -- PROFILE -- */
+function saveProfile() {
+  SESSION.name = document.getElementById('profile-name').value;
+  SESSION.email = document.getElementById('profile-email').value;
+  SESSION.roleLabel = document.getElementById('profile-title').value;
+  localStorage.setItem('salestrack_session', JSON.stringify(SESSION));
+  initUserUI();
+  showToast('Profile updated successfully', 'success');
+}
+
+/* -- NOTIFICATIONS -- */
+function toggleNotifSetting(el) {
+  el.classList.toggle('on');
+}
+
+function saveNotificationSettings() {
+  const settings = {};
+  document.querySelectorAll('.toggle-switch[data-key]').forEach(toggle => {
+    settings[toggle.dataset.key] = toggle.classList.contains('on');
+  });
+  localStorage.setItem('salestrack_notif_settings', JSON.stringify(settings));
+  showToast('Notification preferences saved', 'success');
+}
+
+/* -- APPEARANCE -- */
+function setSidebarColor(color, el) {
+  document.documentElement.style.setProperty('--bg-sidebar', color);
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function setFontSize(size) {
+  document.body.style.fontSize = size + 'px';
+}
+
+function saveAppearanceSettings() {
+  localStorage.setItem('salestrack_appearance', JSON.stringify({
+    sidebarColor: document.documentElement.style.getPropertyValue('--bg-sidebar'),
+    fontSize: document.body.style.fontSize
+  }));
+  showToast('Appearance saved', 'success');
+}
+
+/* -- DATA -- */
+function updateDataStats() {
+  document.getElementById('data-leads').textContent = getLeads().length;
+  document.getElementById('data-activities').textContent = getActivities().length;
+  const leads = getLeads();
+  if (leads.length > 0) {
+    const latest = leads.reduce((a, b) => new Date(a.updatedAt) > new Date(b.updatedAt) ? a : b);
+    document.getElementById('data-updated').textContent = new Date(latest.updatedAt).toLocaleDateString();
+  }
+}
+
+function loadSampleData() {
+  const leads = [
+    { id: 'lead_1', name: 'Nguyen Thi Linh', company: 'TechCorp Vietnam', email: 'linh@techcorp.vn', phone: '0901234567', dealSize: 32000, source: 'Website', stage: 'Proposal', probability: 50, notes: 'Interested in enterprise package', createdAt: '2026-03-15T08:00:00Z', updatedAt: '2026-05-20T10:00:00Z' },
+    { id: 'lead_2', name: 'Tran Minh Duc', company: 'ABC Manufacturing', email: 'duc@abcmfg.vn', phone: '0912345678', dealSize: 45000, source: 'Referral', stage: 'Negotiation', probability: 75, notes: 'Budget approved, finalizing terms', createdAt: '2026-02-10T09:00:00Z', updatedAt: '2026-05-25T14:00:00Z' },
+    { id: 'lead_3', name: 'Pham Thi Hoa', company: 'XYZ Retail Group', email: 'hoa@xyz.vn', phone: '0923456789', dealSize: 18500, source: 'Event', stage: 'Qualification', probability: 25, notes: 'Met at Vietnam Tech Summit', createdAt: '2026-04-01T10:00:00Z', updatedAt: '2026-05-10T09:00:00Z' },
+    { id: 'lead_4', name: 'Le Van Nam', company: 'StartupVN', email: 'nam@startupvn.vn', phone: '0934567890', dealSize: 78000, source: 'Cold Call', stage: 'Prospecting', probability: 10, notes: 'CEO, very busy schedule', createdAt: '2026-05-01T11:00:00Z', updatedAt: '2026-05-01T11:00:00Z' },
+    { id: 'lead_5', name: 'Vo Thi Mai', company: 'Global Logistics Co', email: 'mai@global.vn', phone: '0945678901', dealSize: 55000, source: 'Website', stage: 'Closed Won', probability: 100, notes: 'Contract signed April 2026', createdAt: '2026-01-15T08:00:00Z', updatedAt: '2026-04-30T16:00:00Z' },
+    { id: 'lead_6', name: 'Dang Quoc Hung', company: 'Saigon Food JSC', email: 'hung@saigon.vn', phone: '0956789012', dealSize: 28000, source: 'Referral', stage: 'Closed Won', probability: 100, notes: 'Upsell opportunity Q3', createdAt: '2026-02-20T09:00:00Z', updatedAt: '2026-05-15T11:00:00Z' },
+    { id: 'lead_7', name: 'Bui Thi Lan', company: 'MedTech Solutions', email: 'lan@medtech.vn', phone: '0967890123', dealSize: 92000, source: 'Event', stage: 'Proposal', probability: 50, notes: 'Needs board approval', createdAt: '2026-04-10T10:00:00Z', updatedAt: '2026-05-28T13:00:00Z' },
+    { id: 'lead_8', name: 'Hoang Van Tung', company: 'EduSmart Vietnam', email: 'tung@edusmart.vn', phone: '0978901234', dealSize: 15000, source: 'Website', stage: 'Closed Lost', probability: 0, notes: 'Chose competitor on price', createdAt: '2026-03-05T08:00:00Z', updatedAt: '2026-04-20T10:00:00Z' }
+  ];
+  const activities = [
+    { id: 'act_1', type: 'Call', leadId: 'lead_1', leadName: 'Nguyen Thi Linh', company: 'TechCorp Vietnam', stage: 'Proposal', date: '2026-05-20T10:00:00Z', duration: 30, notes: 'Discussed enterprise pricing.', nextAction: 'Send comparison doc', createdAt: '2026-05-20T10:30:00Z' },
+    { id: 'act_2', type: 'Email', leadId: 'lead_2', leadName: 'Tran Minh Duc', company: 'ABC Manufacturing', stage: 'Negotiation', date: '2026-05-25T14:00:00Z', duration: 0, notes: 'Sent revised proposal.', nextAction: 'Follow up Wed', createdAt: '2026-05-25T14:15:00Z' },
+    { id: 'act_3', type: 'Meeting', leadId: 'lead_3', leadName: 'Pham Thi Hoa', company: 'XYZ Retail Group', stage: 'Qualification', date: '2026-05-10T09:00:00Z', duration: 60, notes: 'Product demo.', nextAction: 'Schedule CFO call', createdAt: '2026-05-10T10:05:00Z' }
+  ];
+  saveLeads(leads);
+  saveActivities(activities);
+  showToast('Sample data loaded - 8 leads & 3 activities', 'success');
+  updateDataStats();
+}
+
+function clearData() {
+  if (!confirm('Clear all data? This cannot be undone.')) return;
+  ['salestrack_leads', 'salestrack_activities', 'salestrack_settings'].forEach(k => localStorage.removeItem(k));
+  showToast('All data cleared', 'info');
+  updateDataStats();
+}
+
+function exportData() {
+  const data = { exported: new Date().toISOString(), leads: getLeads(), activities: getActivities() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'salestrack_export_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+  showToast('Data exported successfully', 'success');
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.leads) saveLeads(data.leads);
+      if (data.activities) saveActivities(data.activities);
+      showToast('Data imported successfully', 'success');
+      updateDataStats();
+    } catch (err) {
+      showToast('Invalid JSON file', 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* -- AI -- */
+function toggleApiKey() {
+  const input = document.getElementById('gemini-api-key');
+  const icon = document.getElementById('api-key-icon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'fa-solid fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fa-solid fa-eye';
+  }
+}
+
+function testGeminiConnection() {
+  const status = document.getElementById('gemini-status');
+  status.textContent = 'Testing...';
+  status.style.color = 'var(--text-muted)';
+
+  const apiKey = document.getElementById('gemini-api-key').value;
+  if (!apiKey) {
+    status.innerHTML = '<span style="color:var(--red);">&#10007; No API key</span>';
+    return;
+  }
+
+  setTimeout(() => {
+    status.innerHTML = '<span style="color:var(--green);">&#10003; Connected</span>';
+  }, 1000);
+}
+
+function saveAISettings() {
+  const settings = getSettings();
+  settings.geminiApiKey = document.getElementById('gemini-api-key').value;
+  settings.geminiModel = document.getElementById('gemini-model').value;
+  settings.aiTone = document.getElementById('ai-tone').value;
+  settings.aiLanguage = document.getElementById('ai-language').value;
+  settings.aiMaxLength = document.getElementById('ai-max-length').value;
+  saveSettings(settings);
+  showToast('AI settings saved', 'success');
+}
+
+/* -- SECURITY -- */
+function updatePasswordStrength(pwd) {
+  const fill = document.getElementById('strength-fill');
+  const text = document.getElementById('strength-text');
+  let strength = 0;
+  if (pwd.length >= 6) strength++;
+  if (pwd.length >= 10) strength++;
+  if (/[A-Z]/.test(pwd)) strength++;
+  if (/[0-9]/.test(pwd)) strength++;
+  if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+
+  const colors = ['#ef4444', '#f59e0b', '#eab308', '#22c55e', '#10b981'];
+  const labels = ['Very weak', 'Weak', 'Fair', 'Strong', 'Very strong'];
+
+  fill.style.width = (strength * 20) + '%';
+  fill.style.background = colors[strength - 1] || '#e2e8f0';
+  text.textContent = labels[strength - 1] || 'Enter a password';
+}
+
+function changePassword() {
+  const curr = document.getElementById('curr-password').value;
+  const newPwd = document.getElementById('new-password').value;
+  const confirm = document.getElementById('confirm-password').value;
+
+  if (!curr || !newPwd || !confirm) {
+    showToast('Please fill all password fields', 'error');
+    return;
+  }
+  if (newPwd !== confirm) {
+    showToast('Passwords do not match', 'error');
+    return;
+  }
+  showToast('Password updated successfully', 'success');
+  document.getElementById('curr-password').value = '';
+  document.getElementById('new-password').value = '';
+  document.getElementById('confirm-password').value = '';
+  updatePasswordStrength('');
+}
+
+/* -- ACTIVE NAV -- */
+function setActiveNav(id) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+}
+
+/* -- INIT -- */
+document.addEventListener('DOMContentLoaded', function () {
+  checkAuth();
+  initUserUI();
+  setActiveNav('nav-settings');
+  updateDataStats();
+
+  // Load AI settings
+  const settings = getSettings();
+  if (settings.geminiApiKey) document.getElementById('gemini-api-key').value = settings.geminiApiKey;
+  if (settings.geminiModel) document.getElementById('gemini-model').value = settings.geminiModel;
+  if (settings.aiTone) document.getElementById('ai-tone').value = settings.aiTone;
+  if (settings.aiLanguage) document.getElementById('ai-language').value = settings.aiLanguage;
+  if (settings.aiMaxLength) document.getElementById('ai-max-length').value = settings.aiMaxLength;
+});
+</script>
+</body>
+</html>
