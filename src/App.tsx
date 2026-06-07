@@ -4,11 +4,12 @@ import { Header } from './components/Header';
 import { ReportsPage } from './components/ReportsPage';
 import { SettingsPage } from './components/SettingsPage';
 import { PlaceholderPage } from './components/PlaceholderPage';
+import { LeadsPage } from './components/leads/LeadsPage';
 import { Toast } from './components/Toast';
 import type { Page, Role, UserData, ReportMetrics, ActivityMetrics, ToastState } from './types';
 
-const MANAGER_USER: UserData = { name: 'Duy Nguyen', initials: 'DN', roleTitle: 'Sales Manager' };
-const MEMBER_USER: UserData = { name: 'Alex Rep Person', initials: 'AR', roleTitle: 'Sales Member' };
+const MANAGER_USER: UserData = { name: 'Anna Nguyen', initials: 'AN', roleTitle: 'Sales Manager' };
+const MEMBER_USER: UserData = { name: 'Duy Nguyen', initials: 'DN', roleTitle: 'Sales Member' };
 
 const MANAGER_REPORTS: ReportMetrics = {
   leads: '4,812',
@@ -47,8 +48,8 @@ function App() {
 
   const handleNavigate = useCallback((page: Page) => {
     setCurrentPage(page);
-    showToast(`Switched module view context to: ${page.toUpperCase()}`);
-  }, [showToast]);
+    setSidebarOpen(false);
+  }, []);
 
   const handleRoleChange = useCallback((newRole: Role) => {
     setRole(newRole);
@@ -77,6 +78,14 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'leads':
+        return (
+          <LeadsPage
+            role={role}
+            userName={user.name}
+            onToast={showToast}
+          />
+        );
       case 'reports':
         return <ReportsPage reports={reports} activities={activities} />;
       case 'settings':
