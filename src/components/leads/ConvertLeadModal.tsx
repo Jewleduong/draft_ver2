@@ -34,6 +34,8 @@ export function ConvertLeadModal({ lead, onClose, onConvert }: ConvertLeadModalP
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setSaving(true);
     try {
+      await onConvert({ name: form.name.trim(), value: parseFloat(form.value), stage: form.stage, expected_close_date: form.expected_close_date });
+    } finally { setSaving(false); }
       await onConvert({
         name: form.name.trim(),
         value: parseFloat(form.value),
@@ -48,6 +50,35 @@ export function ConvertLeadModal({ lead, onClose, onConvert }: ConvertLeadModalP
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <div><h2 className="text-lg font-bold text-gray-900 dark:text-white">Convert to Deal</h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Creating deal from: {lead.name}</p></div>
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 transition-colors"><X className="w-5 h-5" /></button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="px-6 py-5 space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">Deal Name <span className="text-red-500">*</span></label>
+              <div className="relative"><Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input type="text" value={form.name} onChange={e => { setForm(f => ({ ...f, name: e.target.value })); setErrors(er => ({ ...er, name: '' })); }}
+                  className={`w-full pl-9 pr-4 py-2.5 rounded-lg border text-sm bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${errors.name ? 'border-red-400' : 'border-gray-200 dark:border-gray-700'}`} />
+              </div>
+              {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">Deal Value <span className="text-red-500">*</span></label>
+                <div className="relative"><DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input type="number" value={form.value} onChange={e => { setForm(f => ({ ...f, value: e.target.value })); setErrors(er => ({ ...er, value: '' })); }} min="0"
+                    className={`w-full pl-9 pr-4 py-2.5 rounded-lg border text-sm bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${errors.value ? 'border-red-400' : 'border-gray-200 dark:border-gray-700'}`} />
+                </div>
+                {errors.value && <p className="text-xs text-red-500 mt-1">{errors.value}</p>}
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">Pipeline Stage</label>
+                <div className="relative"><Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <select value={form.stage} onChange={e => setForm(f => ({ ...f, stage: e.target.value }))}
+                    className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 text-sm bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition appearance-none">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <div>
@@ -122,6 +153,11 @@ export function ConvertLeadModal({ lead, onClose, onConvert }: ConvertLeadModalP
                 </div>
               </div>
             </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">Expected Close Date <span className="text-red-500">*</span></label>
+              <div className="relative"><Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input type="date" value={form.expected_close_date} onChange={e => { setForm(f => ({ ...f, expected_close_date: e.target.value })); setErrors(er => ({ ...er, expected_close_date: '' })); }}
+                  className={`w-full pl-9 pr-4 py-2.5 rounded-lg border text-sm bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${errors.expected_close_date ? 'border-red-400' : 'border-gray-200 dark:border-gray-700'}`} />
 
             <div>
               <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">
@@ -139,6 +175,10 @@ export function ConvertLeadModal({ lead, onClose, onConvert }: ConvertLeadModalP
               {errors.expected_close_date && <p className="text-xs text-red-500 mt-1">{errors.expected_close_date}</p>}
             </div>
           </div>
+          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 rounded-b-2xl">
+            <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 transition">Cancel</button>
+            <button type="submit" disabled={saving} className="px-5 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition disabled:opacity-60 flex items-center gap-2">
+              {saving ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Converting...</> : 'Convert to Deal'}
 
           <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 rounded-b-2xl">
             <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 transition">
