@@ -73,8 +73,3 @@ export const STAGE_PROBABILITIES: Record<DealStage, number> = {
 export const DEAL_STAGES: DealStage[] = [
   'Prospecting', 'Qualification', 'Proposal', 'Negotiation', 'Closed Won', 'Closed Lost'
 ];
-  value: number;
-  stage: string;
-  expected_close_date: string | null;
-  created_at: string;
-}

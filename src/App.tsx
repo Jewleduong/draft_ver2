@@ -70,13 +70,6 @@ function App() {
         return <LeadsPage role={role} userName={user.name} onToast={showToast} />;
       case 'deals':
         return <DealsPage role={role} userName={user.name} onToast={showToast} />;
-        return (
-          <LeadsPage
-            role={role}
-            userName={user.name}
-            onToast={showToast}
-          />
-        );
       case 'reports':
         return <ReportsPage reports={reports} activities={activities} />;
       case 'settings':
